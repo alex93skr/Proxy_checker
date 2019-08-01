@@ -165,8 +165,9 @@ def main():
     except Exception as err:
         print('connect to postgres ERR:', err)
 
-    db_del_all_value(conn)
-    db_save_value(conn, good_proxy_list)
+    if len(good_proxy_list) > 10:
+        db_del_all_value(conn)
+        db_save_value(conn, good_proxy_list)
 
     # db_validation()
     # db_load_value()
@@ -177,12 +178,19 @@ def main():
     if not conn is None:
         conn.close()
 
+    global run
+    run += 1
+    print('script is runing ', run, 'times')
+
     print('sleep ...')
     time.sleep(3600)  # спать час
 
 
 #############################################################
 
+run = 0
+
 if __name__ == "__main__":
+    run = 0
     while True:
         main()
