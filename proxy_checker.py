@@ -177,6 +177,7 @@ def main():
     if not conn is None:
         conn.close()
 
+    print('sleep ...')
     time.sleep(3600)  # спать час
 
 
