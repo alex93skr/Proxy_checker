@@ -116,6 +116,14 @@ def db_validation():
     pass
 
 
+def random_proxy(conn):
+    with conn.cursor() as cursor:
+        cursor.execute("select ip from proxy limit 1 offset floor(random() * (select count(*) from proxy));")
+        conn.commit()
+        proxy = cursor.fetchone()
+    return random_proxy(proxy)[0]
+
+
 def main():
     conn = None
     max_proxy_count = 1000
@@ -169,7 +177,7 @@ def main():
     if not conn is None:
         conn.close()
 
-    time.sleep(3600)    # спать час
+    time.sleep(3600)  # спать час
 
 
 #############################################################
