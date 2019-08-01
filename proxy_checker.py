@@ -76,7 +76,7 @@ def scraping_from__spys_me(url, limit=1000):
 
 def check_proxy(proxy):
     url = 'https://yandex.ru/images/'
-    time = 5
+    time = 3
     proxy1 = {'https': 'https://' + proxy}
     print(' - proxy_check', proxy, end='')
     try:
