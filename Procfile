@@ -1,1 +1,1 @@
-web: python3 proxy_checker.py
+worker: python3 proxy_checker.py
