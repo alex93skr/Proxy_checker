@@ -1,0 +1,5 @@
+requests==2.22.0
+Flask==1.0.3
+fake_headers==1.0.2
+psycopg2==2.8.2
+beautifulsoup4==4.8.0
