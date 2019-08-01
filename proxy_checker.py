@@ -11,6 +11,7 @@ import re
 import random
 import configparser
 import json
+import time
 
 import requests
 import psycopg2
@@ -19,7 +20,9 @@ from psycopg2.extras import DictCursor
 from psycopg2 import sql
 from bs4 import BeautifulSoup
 from fake_headers import Headers
-from flask import Flask, request
+
+
+# from flask import Flask, request
 
 
 #############################################################
@@ -115,7 +118,7 @@ def db_validation():
 
 def main():
     conn = None
-    max_proxy_count = 10
+    max_proxy_count = 1000
 
     if "HEROKU" in list(os.environ.keys()):
         host = os.environ['host']
@@ -166,8 +169,11 @@ def main():
     if not conn is None:
         conn.close()
 
+    time.sleep(3600)    # спать час
+
 
 #############################################################
 
 if __name__ == "__main__":
-    main()
+    while True:
+        main()
