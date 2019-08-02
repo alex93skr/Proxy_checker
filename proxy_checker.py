@@ -175,7 +175,7 @@ def main():
     # scraping
     # parsing
 
-    if not conn is None:
+    if conn is not None:
         conn.close()
 
     global run
@@ -193,4 +193,7 @@ run = 0
 if __name__ == "__main__":
     run = 0
     while True:
-        main()
+        try:
+            main()
+        except:
+            pass
