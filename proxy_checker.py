@@ -215,5 +215,8 @@ if __name__ == "__main__":
             time.sleep(3600)  # спать час
         except Exception as err:
             print('ERR:', err)
+            print('script is runing ', run, 'times')
+            print('sleep ...')
+            time.sleep(3600)  # спать час
 
 #############################################################
