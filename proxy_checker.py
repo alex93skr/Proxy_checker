@@ -72,10 +72,10 @@ def scraping_from__spys_me(url, limit=1000):
     return proxy_arr[:limit]
 
 
-def check_proxy(n, ip):
+def check_proxy2(n, ip):
     url = 'https://yandex.ru/images/'
     proxy1 = {'https': 'https://' + ip}
-    # print(' - proxy_check', proxy, end='')
+    print(' - proxy_check', proxy1)
 
     test = requests.get(url, proxies=proxy1, headers=fake_head(), timeout=CHECK_TIMEOUT)
     if test.ok:
@@ -99,10 +99,10 @@ def check_proxy(n, ip):
 
 
 
-def check_proxy1(n, ip):
+def check_proxy(n, ip):
     url = 'https://yandex.ru/images/'
     proxy1 = {'https': 'https://' + ip}
-    # print(' - proxy_check', proxy, end='')
+    print(' - proxy_check', proxy1)
     try:
         test = requests.get(url, proxies=proxy1, headers=fake_head(), timeout=CHECK_TIMEOUT)
         if test.ok:
@@ -177,22 +177,23 @@ class MyThread(threading.Thread):
 def main():
     global proxy_list_not_checked
 
-    proxy_list_not_checked += scraping_from__free_proxy_list_net('https://free-proxy-list.net', limit=MAX_PROXY_COUNT)
-    proxy_list_not_checked += scraping_from__free_proxy_list_net('https://www.us-proxy.org', limit=MAX_PROXY_COUNT)
-    proxy_list_not_checked += scraping_from__free_proxy_list_net('https://free-proxy-list.net/uk-proxy.html')
-    # proxy_list_not_checked += scraping_from__spys_me('http://spys.me/proxy.txt', limit=MAX_PROXY_COUNT)
+    # proxy_list_not_checked += scraping_from__free_proxy_list_net('https://free-proxy-list.net', limit=MAX_PROXY_COUNT)
+    # proxy_list_not_checked += scraping_from__free_proxy_list_net('https://www.us-proxy.org', limit=MAX_PROXY_COUNT)
+    # proxy_list_not_checked += scraping_from__free_proxy_list_net('https://free-proxy-list.net/uk-proxy.html')
+    proxy_list_not_checked += scraping_from__spys_me('http://spys.me/proxy.txt', limit=MAX_PROXY_COUNT)
 
     print('proxy_list_not_checked:', len(proxy_list_not_checked))
 
     n = 1
     for ip in proxy_list_not_checked:
-        t = MyThread(n, ip)
-        t.start()
-        threads.append(t)
+        # t = MyThread(n, ip)
+        # t.start()
+        # threads.append(t)
+        check_proxy(n, ip)
         n+=1
 
-    for t in threads:
-        t.join()
+    # for t in threads:
+    #     t.join()
 
     print(threading.enumerate())
 
