@@ -79,17 +79,17 @@ def check_proxy(n, ip):
     try:
         test = requests.get(url, proxies=proxy1, headers=fake_head(), timeout=CHECK_TIMEOUT)
         if test.ok:
-            lockprint.acquire()
+            # lockprint.acquire()
             print(n, ' - proxy_check', ip, 'ok')
             print(len(threading.enumerate()))
-            lockprint.release()
+            # lockprint.release()
 
             return True
     except Exception as err:
-        lockprint.acquire()
+        # lockprint.acquire()
         print(n, ' - proxy_check', ip, 'err', err)
         print(len(threading.enumerate()))
-        lockprint.release()
+        # lockprint.release()
         return False
 
 
