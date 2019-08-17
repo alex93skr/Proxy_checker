@@ -82,6 +82,8 @@ def check_proxy(n, ip):
             # lockprint.acquire()
             print(n, ' - proxy_check', ip, 'ok')
             print(len(threading.enumerate()))
+            if len(threading.enumerate()) <5:
+                print(threading.enumerate())
             # lockprint.release()
 
             return True
@@ -89,6 +91,8 @@ def check_proxy(n, ip):
         # lockprint.acquire()
         print(n, ' - proxy_check', ip, 'err', err)
         print(len(threading.enumerate()))
+        if len(threading.enumerate()) < 5:
+            print(threading.enumerate())
         # lockprint.release()
         return False
 
@@ -138,9 +142,9 @@ class MyThread(threading.Thread):
 
     def run(self):
         if check_proxy(self.n, self.ip):
-            lockarr.acquire()
+            # lockarr.acquire()
             proxy_list_good.append(self.ip)
-            lockarr.release()
+            # lockarr.release()
 
 
 def main():
