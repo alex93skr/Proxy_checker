@@ -76,6 +76,33 @@ def check_proxy(n, ip):
     url = 'https://yandex.ru/images/'
     proxy1 = {'https': 'https://' + ip}
     # print(' - proxy_check', proxy, end='')
+
+    test = requests.get(url, proxies=proxy1, headers=fake_head(), timeout=CHECK_TIMEOUT)
+    if test.ok:
+        # lockprint.acquire()
+        print(n, ' - proxy_check', ip, 'ok')
+        print(len(threading.enumerate()))
+        if len(threading.enumerate()) < 5:
+            print(threading.enumerate())
+        # lockprint.release()
+        return True
+    else:
+        # lockprint.acquire()
+        print(n, ' - proxy_check', ip, 'err', err)
+        print(len(threading.enumerate()))
+        if len(threading.enumerate()) < 5:
+            print(threading.enumerate())
+        # lockprint.release()
+        return False
+
+
+
+
+
+def check_proxy1(n, ip):
+    url = 'https://yandex.ru/images/'
+    proxy1 = {'https': 'https://' + ip}
+    # print(' - proxy_check', proxy, end='')
     try:
         test = requests.get(url, proxies=proxy1, headers=fake_head(), timeout=CHECK_TIMEOUT)
         if test.ok:
@@ -150,9 +177,9 @@ class MyThread(threading.Thread):
 def main():
     global proxy_list_not_checked
 
-    proxy_list_not_checked += scraping_from__free_proxy_list_net('https://free-proxy-list.net', limit=MAX_PROXY_COUNT)
-    proxy_list_not_checked += scraping_from__free_proxy_list_net('https://www.us-proxy.org', limit=MAX_PROXY_COUNT)
-    proxy_list_not_checked += scraping_from__free_proxy_list_net('https://free-proxy-list.net/uk-proxy.html')
+    # proxy_list_not_checked += scraping_from__free_proxy_list_net('https://free-proxy-list.net', limit=MAX_PROXY_COUNT)
+    # proxy_list_not_checked += scraping_from__free_proxy_list_net('https://www.us-proxy.org', limit=MAX_PROXY_COUNT)
+    # proxy_list_not_checked += scraping_from__free_proxy_list_net('https://free-proxy-list.net/uk-proxy.html')
     proxy_list_not_checked += scraping_from__spys_me('http://spys.me/proxy.txt', limit=MAX_PROXY_COUNT)
 
     print('proxy_list_not_checked:', len(proxy_list_not_checked))
@@ -201,8 +228,8 @@ if __name__ == "__main__":
         user = config.get('Settings', 'user')
         password = config.get('Settings', 'password')
 
-    lockarr = threading.Lock()
-    lockprint = threading.Lock()
+    # lockarr = threading.Lock()
+    # lockprint = threading.Lock()
 
     threads = []
     proxy_list_not_checked = []
