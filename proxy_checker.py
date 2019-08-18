@@ -72,23 +72,21 @@ def scraping_from__spys_me(url, limit=1000):
     return proxy_arr[:limit]
 
 
-def check_proxy(n, ip):
+def check_proxy(proxy):
     url = 'https://yandex.ru/images/'
-    proxy1 = {'https': 'https://' + ip}
+    proxy1 = {'https': 'https://' + proxy}
     # print(' - proxy_check', proxy, end='')
     try:
         test = requests.get(url, proxies=proxy1, headers=fake_head(), timeout=CHECK_TIMEOUT)
         if test.ok:
             lockprint.acquire()
-            print(n, ' - proxy_check', ip, 'ok')
-            print(len(threading.enumerate()))
+            print(' - proxy_check', proxy, 'ok')
             lockprint.release()
 
             return True
     except Exception as err:
         lockprint.acquire()
-        print(n, ' - proxy_check', ip, 'err', err)
-        print(len(threading.enumerate()))
+        print(' - proxy_check', proxy, 'err', err)
         lockprint.release()
         return False
 
@@ -129,15 +127,14 @@ def random_proxy_from_db(arr):
 
 
 class MyThread(threading.Thread):
-    def __init__(self, n, ip):
-        self.n = n
-        self.ip = ip
 
+    def __init__(self, ip):
+        self.ip = ip
         """Инициализация потока"""
         threading.Thread.__init__(self)
 
     def run(self):
-        if check_proxy(self.n, self.ip):
+        if check_proxy(self.ip):
             lockarr.acquire()
             proxy_list_good.append(self.ip)
             lockarr.release()
@@ -151,14 +148,12 @@ def main():
     proxy_list_not_checked += scraping_from__free_proxy_list_net('https://free-proxy-list.net/uk-proxy.html')
     proxy_list_not_checked += scraping_from__spys_me('http://spys.me/proxy.txt', limit=MAX_PROXY_COUNT)
 
-    print('proxy_list_not_checked:', len(proxy_list_not_checked))
+    print(len(proxy_list_not_checked))
 
-    n = 1
-    for ip in proxy_list_not_checked:
-        t = MyThread(n, ip)
+    for i in proxy_list_not_checked:
+        t = MyThread(i)
         t.start()
         threads.append(t)
-        n+=1
 
     for t in threads:
         t.join()
