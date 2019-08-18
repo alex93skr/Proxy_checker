@@ -146,7 +146,12 @@ def main():
     # proxy_list_not_checked += scraping_from__free_proxy_list_net('https://free-proxy-list.net', limit=MAX_PROXY_COUNT)
     # proxy_list_not_checked += scraping_from__free_proxy_list_net('https://www.us-proxy.org', limit=MAX_PROXY_COUNT)
     # proxy_list_not_checked += scraping_from__free_proxy_list_net('https://free-proxy-list.net/uk-proxy.html')
-    proxy_list_not_checked += scraping_from__spys_me('http://spys.me/proxy.txt', limit=MAX_PROXY_COUNT)
+    # proxy_list_not_checked += scraping_from__spys_me('http://spys.me/proxy.txt', limit=MAX_PROXY_COUNT)
+
+    proxy_list_not_checked = ['178.172.201.137:8888', '190.110.222.156:999', '36.67.39.47:8080', '117.255.221.114:8080', '41.77.188.81:53432',
+     '103.86.135.62:59538', '5.133.27.61:3129', '192.99.191.236:8080']
+
+    print(proxy_list_not_checked)
 
     print(len(proxy_list_not_checked))
 
