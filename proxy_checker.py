@@ -75,18 +75,16 @@ def scraping_from__spys_me(url, limit=1000):
 def check_proxy(proxy):
     url = 'https://yandex.ru/images/'
     proxy1 = {'https': 'https://' + proxy}
-    lockprint.acquire()
-    print(' - IP', proxy)
+    # print(' - IP', proxy)
     try:
         test = requests.get(url, proxies=proxy1, headers=fake_head(), timeout=CHECK_TIMEOUT)
         if test.ok:
-            # lockprint.acquire()
+            lockprint.acquire()
             print(' - proxy_check', proxy, 'ok')
             lockprint.release()
-
             return True
     except Exception as err:
-
+        lockprint.acquire()
         print(' - proxy_check', proxy, 'err', err)
         lockprint.release()
         return False
@@ -146,22 +144,25 @@ def main():
 
     proxy_list_not_checked += scraping_from__free_proxy_list_net('https://free-proxy-list.net', limit=MAX_PROXY_COUNT)
     proxy_list_not_checked += scraping_from__free_proxy_list_net('https://www.us-proxy.org', limit=MAX_PROXY_COUNT)
-    proxy_list_not_checked += scraping_from__free_proxy_list_net('https://free-proxy-list.net/uk-proxy.html', limit=MAX_PROXY_COUNT)
+    proxy_list_not_checked += scraping_from__free_proxy_list_net('https://free-proxy-list.net/uk-proxy.html',
+                                                                 limit=MAX_PROXY_COUNT)
     proxy_list_not_checked += scraping_from__spys_me('http://spys.me/proxy.txt', limit=MAX_PROXY_COUNT)
 
-
-
-    print(proxy_list_not_checked)       # !!!!
+    # print(proxy_list_not_checked)
 
     print(len(proxy_list_not_checked))
 
-    for i in proxy_list_not_checked:
-        t = MyThread(i)
-        t.start()
-        threads.append(t)
-
-    for t in threads:
-        t.join()
+    limit = 0
+    while limit <= len(proxy_list_not_checked):
+        threads = []
+        for ip in proxy_list_not_checked[limit:limit + MAX_THREAD_COUNT]:
+            t = MyThread(ip)
+            t.start()
+            threads.append(t)
+        for t in threads:
+            t.join()
+        print('list shift')
+        limit += MAX_THREAD_COUNT
 
     print(threading.enumerate())
 
@@ -200,12 +201,12 @@ if __name__ == "__main__":
     lockarr = threading.Lock()
     lockprint = threading.Lock()
 
-    threads = []
     proxy_list_not_checked = []
     proxy_list_good = []
 
-    MAX_PROXY_COUNT = 280
+    MAX_PROXY_COUNT = 1000
     CHECK_TIMEOUT = 2
+    MAX_THREAD_COUNT = 50
     run = 0
 
     while True:
