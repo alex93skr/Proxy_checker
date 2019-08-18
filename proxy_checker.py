@@ -75,17 +75,18 @@ def scraping_from__spys_me(url, limit=1000):
 def check_proxy(proxy):
     url = 'https://yandex.ru/images/'
     proxy1 = {'https': 'https://' + proxy}
-    # print(' - proxy_check', proxy, end='')
+    lockprint.acquire()
+    print(' - IP', proxy)
     try:
         test = requests.get(url, proxies=proxy1, headers=fake_head(), timeout=CHECK_TIMEOUT)
         if test.ok:
-            lockprint.acquire()
+            # lockprint.acquire()
             print(' - proxy_check', proxy, 'ok')
             lockprint.release()
 
             return True
     except Exception as err:
-        lockprint.acquire()
+
         print(' - proxy_check', proxy, 'err', err)
         lockprint.release()
         return False
@@ -148,7 +149,9 @@ def main():
     proxy_list_not_checked += scraping_from__free_proxy_list_net('https://free-proxy-list.net/uk-proxy.html', limit=MAX_PROXY_COUNT)
     proxy_list_not_checked += scraping_from__spys_me('http://spys.me/proxy.txt', limit=MAX_PROXY_COUNT)
 
-    print(proxy_list_not_checked)
+
+
+    print(proxy_list_not_checked)       # !!!!
 
     print(len(proxy_list_not_checked))
 
