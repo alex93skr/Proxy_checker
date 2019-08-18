@@ -204,7 +204,7 @@ if __name__ == "__main__":
     proxy_list_not_checked = []
     proxy_list_good = []
 
-    MAX_PROXY_COUNT = 1000
+    MAX_PROXY_COUNT = 290
     CHECK_TIMEOUT = 2
     MAX_THREAD_COUNT = 50
     run = 0
