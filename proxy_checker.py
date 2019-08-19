@@ -161,8 +161,8 @@ def main():
             threads.append(t)
         for t in threads:
             t.join()
-        print('list shift')
         limit += MAX_THREAD_COUNT
+        print('list shift limit', limit)
 
     print(threading.enumerate())
 
@@ -204,9 +204,9 @@ if __name__ == "__main__":
     proxy_list_not_checked = []
     proxy_list_good = []
 
-    MAX_PROXY_COUNT = 290
+    MAX_PROXY_COUNT = 200
     CHECK_TIMEOUT = 2
-    MAX_THREAD_COUNT = 50
+    MAX_THREAD_COUNT = 20
     run = 0
 
     while True:
@@ -218,11 +218,11 @@ if __name__ == "__main__":
             run += 1
             print('script is runing ', run, 'times')
             print('sleep ...')
-            time.sleep(3600)  # спать час
+            time.sleep(10800)  # спать 3 часа
         except Exception as err:
             print('mainERR:', err)
             print('script is runing ', run, 'times')
             print('sleep ...')
-            time.sleep(3600)  # спать час
+            time.sleep(10800)  # спать 3 часа
 
 #############################################################
