@@ -56,7 +56,11 @@ def scraping_from__free_proxy_list_net(url, limit=1000):
                     # print()
         except:
             pass
+    if len(proxy_arr) < 10:
+        print('small amount proxy scraped -', count, 'reload...')
+        return scraping_from__free_proxy_list_net(url, limit=limit)
     print('proxy scraped:', count, ', added to the list:', len(proxy_arr))
+
     return proxy_arr
 
 
@@ -79,14 +83,16 @@ def check_proxy(proxy):
     try:
         test = requests.get(url, proxies=proxy1, headers=fake_head(), timeout=CHECK_TIMEOUT)
         if test.ok:
-            lockprint.acquire()
-            print(' - proxy_check', proxy, 'ok')
-            lockprint.release()
+            if PRINT_CHECK_RESULT:
+                lockprint.acquire()
+                print(' - proxy_check', proxy, 'ok')
+                lockprint.release()
             return True
     except Exception as err:
-        lockprint.acquire()
-        print(' - proxy_check', proxy, 'err', err)
-        lockprint.release()
+        if PRINT_CHECK_RESULT:
+            lockprint.acquire()
+            print(' - proxy_check', proxy, 'err', err)
+            lockprint.release()
         return False
 
 
@@ -207,6 +213,7 @@ if __name__ == "__main__":
     MAX_PROXY_COUNT = 200
     CHECK_TIMEOUT = 2
     MAX_THREAD_COUNT = 20
+    PRINT_CHECK_RESULT = False
     run = 0
 
     while True:
