@@ -147,6 +147,10 @@ class MyThread(threading.Thread):
 
 def main():
     global proxy_list_not_checked
+    global proxy_list_good
+
+    proxy_list_not_checked = []
+    proxy_list_good = []
 
     proxy_list_not_checked += scraping_from__free_proxy_list_net('https://free-proxy-list.net', limit=MAX_PROXY_COUNT)
     proxy_list_not_checked += scraping_from__free_proxy_list_net('https://www.us-proxy.org', limit=MAX_PROXY_COUNT)
