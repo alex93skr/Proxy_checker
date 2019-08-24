@@ -229,11 +229,11 @@ if __name__ == "__main__":
             run += 1
             print('script is runing ', run, 'times')
             print('sleep ...')
-            time.sleep(10800)  # спать 3 часа
+            # time.sleep(10800)  # спать 3 часа
         except Exception as err:
             print('mainERR:', err)
             print('script is runing ', run, 'times')
             print('sleep ...')
-            time.sleep(10800)  # спать 3 часа
+            # time.sleep(10800)  # спать 3 часа
 
 #############################################################
