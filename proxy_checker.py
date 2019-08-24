@@ -220,20 +220,36 @@ if __name__ == "__main__":
     PRINT_CHECK_RESULT = False
     run = 0
 
-    while True:
-        try:
-            conn = psycopg2.connect(dbname=database, user=user, password=password, host=host, sslmode='require')
-            print('connect to postgres OK')
-            main()
-            conn.close()
-            run += 1
-            print('script is runing ', run, 'times')
-            print('sleep ...')
+    try:
+        conn = psycopg2.connect(dbname=database, user=user, password=password, host=host, sslmode='require')
+        print('connect to postgres OK')
+        main()
+        conn.close()
+        run += 1
+        print('script is runing ', run, 'times')
+        print('sleep ...')
             # time.sleep(10800)  # спать 3 часа
-        except Exception as err:
-            print('mainERR:', err)
-            print('script is runing ', run, 'times')
-            print('sleep ...')
+    except Exception as err:
+        print('mainERR:', err)
+        print('script is runing ', run, 'times')
+        print('sleep ...')
             # time.sleep(10800)  # спать 3 часа
-
+            
+#############################################################           
+#while True:
+  #      try:
+   #         conn = psycopg2.connect(dbname=database, user=user, password=password, host=host, sslmode='require')
+    #        print('connect to postgres OK')
+     #       main()
+      #      conn.close()
+      #      run += 1
+    #        print('script is runing ', run, 'times')
+    #        print('sleep ...')
+            # time.sleep(10800)  # спать 3 часа
+     #   except Exception as err:
+      #      print('mainERR:', err)
+       #     print('script is runing ', run, 'times')
+        #    print('sleep ...')
+            # time.sleep(10800)  # спать 3 часа
+            
 #############################################################
